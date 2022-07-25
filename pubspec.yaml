@@ -17,7 +17,6 @@ dependencies:
   cupertino_icons: ^1.0.2
 
  # Packages that we use almost all our projects
-  flutter_launcher_icons: # Change app icon
   sentry_flutter: # Add sentry error tracking
   cached_network_image: # Cached network image package
   shared_preferences: #For local caching
@@ -27,6 +26,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 # Packages that we use almost all our projects
+  build_runner:  # generate dart files
+  freezed:
+  freezed_annotation:
+  json_serializable:
+  rename: #change package name and app name
+  flutter_launcher_icons: # Change app icon
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices.
+  flutter_lints: ^2.0.0
 flutter_icons:
   image_path_android: "assets/images/android_app_icon.png"
   image_path_ios: "assets/images/ios_app_icon.png"
@@ -34,16 +42,7 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
 
-  build_runner:  # generate dart files
-  freezed:
-  freezed_annotation:
-  json_serializable:
-  change_app_package_name:
-  rename:
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices.
-  flutter_lints: ^2.0.0
 
 
 # The following section is specific to Flutter packages.
