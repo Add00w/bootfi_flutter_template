@@ -1,0 +1,18 @@
+{
+  "env_name": "testing",
+  "debug": false,
+  "base_url": {
+    "production": "https://cardetails.store/v1/",
+    "staging":    "https://car-staging.bootfi.com/v1/",
+    "testing":    "https://testing.cardetails.store/v1/",
+    "dev":        "https://car-testing.bootfi.com/v1/"
+  },
+  "primary_color": {
+    "production":"181, 147, 39",
+    "staging": "51, 51, 255",
+    "testing":"29 , 66, 137",
+    "dev":"255, 51, 51"
+  },
+  "sentry_dns": ""
+
+}
