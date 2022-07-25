@@ -15,7 +15,7 @@ This is a template for all of our projects in Bootfi.
     rename --bundleId com.onatcipli.yourappname
     rename --appname yourappname
 ```
-- # For specific os use -t
+- # For specific os use -t or --target
 
 ```dart
     rename --appname yourappname -t ios
