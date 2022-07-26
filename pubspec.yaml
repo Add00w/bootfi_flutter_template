@@ -13,13 +13,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons:
 
  # Packages that we use almost all our projects
   sentry_flutter: # Add sentry error tracking
   cached_network_image: # Cached network image package
   shared_preferences: #For local caching
+  intl:  # I10n
+  http:  # Future-based library for making HTTP requests.
+  pin_code_fields:  # For OTP or pin code inputs
 
 
 dev_dependencies:
@@ -34,7 +39,7 @@ dev_dependencies:
   flutter_launcher_icons: # Change app icon
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices.
-  flutter_lints: ^2.0.0
+  flutter_lints:
 flutter_icons:
   image_path_android: "assets/images/android_app_icon.png"
   image_path_ios: "assets/images/ios_app_icon.png"
@@ -48,6 +53,8 @@ flutter_icons:
 # The following section is specific to Flutter packages.
 flutter:
 
+  # Enable generation of localized Strings from arb files.
+  generate: false
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
