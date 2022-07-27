@@ -27,7 +27,7 @@ dependencies:
   http:  # Library for making HTTP requests.
   http_interceptor:
   pin_code_fields:  # For OTP or pin code inputs
-
+  freezed_annotation:
 
 dev_dependencies:
   flutter_test:
