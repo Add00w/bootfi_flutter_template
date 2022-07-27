@@ -38,7 +38,6 @@ dev_dependencies:
 # Packages that we use almost all our projects
   build_runner:  # generate dart files
   freezed:
-  freezed_annotation:
   json_serializable:
   rename: #change package name and app name
   flutter_launcher_icons: # Change app icon
@@ -68,6 +67,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/config/
 
 
   # To add custom fonts to your application, add a fonts section here,
