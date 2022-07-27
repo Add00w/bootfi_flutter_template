@@ -15,8 +15,14 @@ build/
 *.js.deps
 *.js.map
 
-# Generated Dart files
+# Freezed
 **/*.g.dart
+**/*.freezed.dart
+generated
+# Private files
+*.json
+!example_dev.json
+!example_prod.json
 
 # Miscellaneous
 *.class
