@@ -29,6 +29,8 @@ dependencies:
   pin_code_fields:  # For OTP or pin code inputs
   freezed_annotation:
   flutter_svg:
+  flutter_hooks:  # State management
+  hooks_riverpod: # State management
 
 dev_dependencies:
   flutter_test:
