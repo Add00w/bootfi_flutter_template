@@ -24,7 +24,8 @@ dependencies:
   cached_network_image: # Cached network image package
   shared_preferences: #For local caching
   intl:  # I10n
-  http:  # Future-based library for making HTTP requests.
+  http:  # Library for making HTTP requests.
+  http_interceptor:
   pin_code_fields:  # For OTP or pin code inputs
 
 
