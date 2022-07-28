@@ -13,3 +13,11 @@ class NotificationModel with _$NotificationModel {
   factory NotificationModel.fromJson(Map<String, Object?> json) =>
       _$NotificationModelFromJson(json);
 }
+
+@freezed
+class NotificationModelResponse with _$NotificationModelResponse {
+  factory NotificationModelResponse({
+    required int totalCount,
+    required List<NotificationModel> notifications,
+  }) = _NotificationModelResponse;
+}

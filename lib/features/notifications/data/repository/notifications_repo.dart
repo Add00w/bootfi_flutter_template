@@ -18,6 +18,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
         Importance,
         InitializationSettings,
         NotificationDetails;
+// import 'package:hooks_riverpod/hooks_riverpod.dart' show Reader;
 import 'package:platform_device_id/platform_device_id.dart';
 
 import '../models/notification_model.dart';
@@ -25,12 +26,18 @@ import '../models/notification_model.dart';
 class NotificationsService {
   late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   late AndroidNotificationChannel _androidNotificationChannel;
+  late FirebaseMessaging messaging;
+  // final Reader _read;
+
+  // NotificationsService(this._read);
+
   Future<void> initFCM() async {
-    ///Uncomment this code after configuring firebase
     //init firebase
-    // await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
+    await Firebase.initializeApp(
+        //only un comment this line if you set up firebase vie firebase cli
+        //options: DefaultFirebaseOptions.currentPlatform,
+        );
+    messaging = FirebaseMessaging.instance;
 
     //initialize local notifications package
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -49,8 +56,8 @@ class NotificationsService {
     //initialize local notifications package.
     await _initFlutterLocalNotifications();
 
-    //ios permissions
-    await _setIosPermissions();
+    //Permissions
+    await _setupFcmNotificationSettings();
 
     //Create the channel on the device (if a channel with an id already exists,
     // it will be updated):
@@ -61,23 +68,35 @@ class NotificationsService {
 
     // Get any messages which caused the application to open from
     // a terminated state.
-    await FirebaseMessaging.instance.getInitialMessage();
+    await messaging.getInitialMessage();
 
     //foreground messages
     FirebaseMessaging.onMessage.listen(_showMessage);
 
     //Fires when a new FCM token is generated.
-    FirebaseMessaging.instance.onTokenRefresh.listen((event) async {
+    messaging.onTokenRefresh.listen((event) async {
       debugPrint("token refreshed");
       await setDeviceIdAndFcmToken();
     });
 
     //background messages
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onBackgroundMessage(_backgroundHandler);
   }
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
+  ///handle fcm notification settings (sound,badge..etc)
+  Future<void> _setupFcmNotificationSettings() async {
+    //iOS Configuration
+    messaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      sound: true,
+      badge: true,
+    );
+
+    //Request permission with defaults
+    await messaging.requestPermission();
+  }
+
+  static Future<void> _backgroundHandler(RemoteMessage message) async {
     // If you're going to use other Firebase services in the background, such as Firestore,
     // make sure you call `initializeApp` before using other Firebase services.
     await Firebase.initializeApp();
@@ -96,8 +115,8 @@ class NotificationsService {
       channelDescription: _androidNotificationChannel.description,
       icon: android?.smallIcon,
     );
-    var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
+    const iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    final platformChannelSpecifics = NotificationDetails(
       android: androidNotificationDetails,
       iOS: iOSPlatformChannelSpecifics,
     );
@@ -124,7 +143,7 @@ class NotificationsService {
   Future<List<String>> deviceIdAndToken() async {
     String deviceId = await PlatformDeviceId.getDeviceId ?? '';
     String fcmToken = '';
-    fcmToken = await FirebaseMessaging.instance.getToken() ?? '';
+    fcmToken = await messaging.getToken() ?? '';
 
     return [deviceId, fcmToken];
   }
@@ -140,23 +159,42 @@ class NotificationsService {
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> _setIosPermissions() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
-      badge: true,
-      sound: true,
+  Future<NotificationModelResponse> notifications(int page) async {
+    // final configs = await _read(configurationsProvider.future);
+    // Get the notifications from the server and convert to NotificationModel
+    // final response = await _read(httpProvider).get...
+    // final result = NotificationModelResponse(
+    //   notifications: response.data['notifications'].map((e) {
+    //     return NotificationModel.fromJson(e);
+    //   }).toList(growable: false),
+    //   totalCount: response.data['total'],
+    // );
+    // return result;
+    return NotificationModelResponse(
+      notifications: [
+        NotificationModel(id: 'id', title: 'title', body: 'body'),
+      ],
+      totalCount: 5,
     );
   }
 
-  Future<List<NotificationModel>> notifications(int page) async {
-    // Get the notifications from the server and convert to NotificationModel
-    return [NotificationModel(id: '', title: '', body: '')];
-  }
-
-  Future<List<NotificationModel>> readNotification(String id) async {
+  Future<NotificationModelResponse> readNotification(String id) async {
+    // final configs = await _read(configurationsProvider.future);
     //Read a notification and get the notifications
     // from the server and convert to NotificationModel
-    return [NotificationModel(id: '', title: '', body: '')];
+    // final response = await _read(httpProvider).post...
+    // final result = NotificationModelResponse(
+    //   notifications: response.data['notifications'].map((e) {
+    //     return NotificationModel.fromJson(e);
+    //   }).toList(growable: false),
+    //   totalCount: response.data['total'],
+    // );
+    // return result;
+    return NotificationModelResponse(
+      notifications: [
+        NotificationModel(id: 'id', title: 'title', body: 'body'),
+      ],
+      totalCount: 5,
+    );
   }
 }
