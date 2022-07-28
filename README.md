@@ -6,7 +6,6 @@ This is a template for all of our projects in Bootfi.
 ---
 
 ## To use this template follow these steps.
-## Steps
 
 # Clone the template
 - Clone this repo to your local machine:
@@ -63,11 +62,8 @@ This is a template for all of our projects in Bootfi.
 ## Initialize Firebase in your app
 - In NotificationsRepo, import the Firebase core plugin and the configuration file you generated earlier and uncomment the init firebase code:
 ```dart
-    ///Uncomment this code after configuring firebase
-    //init firebase
-    // await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
+    //Uncomment this line after configuring firebase
+    //options: DefaultFirebaseOptions.currentPlatform,
 ```
 ## And finally
 ```dart
