@@ -65,6 +65,8 @@ This is a template for all of our projects in Bootfi.
     //Uncomment this line after configuring firebase
     //options: DefaultFirebaseOptions.currentPlatform,
 ```
+# Ios needs APNs setup, follow steps below
+[FCM via APNs Integration](https://firebase.flutter.dev/docs/messaging/apple-integration)
 ## And finally
 ```dart
     flutter run
