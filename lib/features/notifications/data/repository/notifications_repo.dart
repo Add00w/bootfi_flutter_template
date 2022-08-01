@@ -18,18 +18,19 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
         Importance,
         InitializationSettings,
         NotificationDetails;
-// import 'package:hooks_riverpod/hooks_riverpod.dart' show Reader;
+import 'package:hooks_riverpod/hooks_riverpod.dart' show Provider, Reader;
 import 'package:platform_device_id/platform_device_id.dart';
 
+// import '../../../../core/config/app_config.dart';
 import '../models/notification_model.dart';
 
-class NotificationsService {
+class NotificationsRepo {
   late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   late AndroidNotificationChannel _androidNotificationChannel;
-  late FirebaseMessaging messaging;
-  // final Reader _read;
+  late FirebaseMessaging _messaging;
+  final Reader _read;
 
-  // NotificationsService(this._read);
+  NotificationsRepo(this._read);
 
   Future<void> initFCM() async {
     //init firebase
@@ -37,7 +38,7 @@ class NotificationsService {
         //only un comment this line if you set up firebase vie firebase cli
         //options: DefaultFirebaseOptions.currentPlatform,
         );
-    messaging = FirebaseMessaging.instance;
+    _messaging = FirebaseMessaging.instance;
 
     //initialize local notifications package
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -51,7 +52,7 @@ class NotificationsService {
     );
 
     //save this deviceID and firebase token.
-    await setDeviceIdAndFcmToken();
+    await _setDeviceIdAndFcmToken();
 
     //initialize local notifications package.
     await _initFlutterLocalNotifications();
@@ -68,15 +69,15 @@ class NotificationsService {
 
     // Get any messages which caused the application to open from
     // a terminated state.
-    await messaging.getInitialMessage();
+    await _messaging.getInitialMessage();
 
     //foreground messages
     FirebaseMessaging.onMessage.listen(_showMessage);
 
     //Fires when a new FCM token is generated.
-    messaging.onTokenRefresh.listen((event) async {
+    _messaging.onTokenRefresh.listen((event) async {
       debugPrint("token refreshed");
-      await setDeviceIdAndFcmToken();
+      await _setDeviceIdAndFcmToken();
     });
 
     //background messages
@@ -86,14 +87,14 @@ class NotificationsService {
   ///handle fcm notification settings (sound,badge..etc)
   Future<void> _setupFcmNotificationSettings() async {
     //iOS Configuration
-    messaging.setForegroundNotificationPresentationOptions(
+    _messaging.setForegroundNotificationPresentationOptions(
       alert: true,
       sound: true,
       badge: true,
     );
 
     //Request permission with defaults
-    await messaging.requestPermission();
+    await _messaging.requestPermission();
   }
 
   static Future<void> _backgroundHandler(RemoteMessage message) async {
@@ -128,8 +129,8 @@ class NotificationsService {
     );
   }
 
-  Future<void> setDeviceIdAndFcmToken() async {
-    // final idAndToken = await deviceIdAndToken();
+  Future<void> _setDeviceIdAndFcmToken() async {
+    // final idAndToken = await _deviceIdAndToken();
     // final body = {
     //   'device_id': idAndToken[0],
     //   'fmc_token': idAndToken[1],
@@ -140,10 +141,10 @@ class NotificationsService {
     // );
   }
 
-  Future<List<String>> deviceIdAndToken() async {
+  Future<List<String>> _deviceIdAndToken() async {
     String deviceId = await PlatformDeviceId.getDeviceId ?? '';
     String fcmToken = '';
-    fcmToken = await messaging.getToken() ?? '';
+    fcmToken = await _messaging.getToken() ?? '';
 
     return [deviceId, fcmToken];
   }
@@ -198,3 +199,7 @@ class NotificationsService {
     );
   }
 }
+
+final notificationsRepoProvider = Provider<NotificationsRepo>((ref) {
+  return NotificationsRepo(ref.read);
+});
