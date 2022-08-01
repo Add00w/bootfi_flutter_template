@@ -35,6 +35,7 @@ dependencies:
   flutter_local_notifications: # For notifications
   platform_device_id: # For notifications
   package_info_plus: # To get the package info
+  pull_to_refresh: # Pagination and refresh
 
 dev_dependencies:
   flutter_test:
