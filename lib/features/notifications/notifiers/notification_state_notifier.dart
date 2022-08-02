@@ -8,30 +8,33 @@ import '../data/repository/notifications_repo.dart';
 class NotificationStateNotifier
     extends StateNotifier<NotificationModelResponse> {
   static final _defaultNotification = NotificationModelResponse(
-    notifications: [NotificationModel(id: 'id', title: 'title', body: 'body')],
-    totalCount: 1,
+    notifications: [NotificationModel(id: '', title: '', body: '')],
+    totalCount: 0,
   );
   final refreshController = RefreshController(
     initialLoadStatus: LoadStatus.idle,
   );
-  NotificationStateNotifier(this._read,
-      [NotificationModelResponse? notification])
-      : super(notification ?? _defaultNotification);
+  // Also make sure if watch is needed or not
+  NotificationStateNotifier(this._read)
+      : _repo = _read(notificationsRepoProvider),
+        super(_defaultNotification) {
+    initFCM();
+  }
   final Reader _read;
+  final NotificationsRepo _repo;
   late int currentPage = 0;
   late int lastPage = 0;
   void initFCM() async {
-    await _read(notificationsRepoProvider).initFCM();
+    //only un comment this line if you set up firebase vie firebase cli
+    // await _repo.initFCM();
   }
 
   void notifications() async {
-    final repo = _read(notificationsRepoProvider);
-    state = await repo.notifications(currentPage);
+    state = await _repo.notifications(currentPage);
   }
 
   void readNotification(String id) async {
-    final repo = _read(notificationsRepoProvider);
-    state = await repo.readNotification(id);
+    state = await _repo.readNotification(id);
   }
 
   void onLoading() async {
@@ -40,8 +43,7 @@ class NotificationStateNotifier
       refreshController.loadNoData();
       return;
     }
-    final repo = _read(notificationsRepoProvider);
-    final result = await repo.notifications(currentPage);
+    final result = await _repo.notifications(currentPage);
     final moreNotifications = <NotificationModel>[];
 
     if (result.notifications.isEmpty) {

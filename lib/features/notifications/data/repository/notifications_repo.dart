@@ -1,3 +1,5 @@
+import 'dart:convert' show json;
+
 import 'package:firebase_core/firebase_core.dart' show Firebase;
 import 'package:firebase_messaging/firebase_messaging.dart'
     show
@@ -18,19 +20,22 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
         Importance,
         InitializationSettings,
         NotificationDetails;
-import 'package:hooks_riverpod/hooks_riverpod.dart' show Provider, Reader;
+import 'package:hooks_riverpod/hooks_riverpod.dart' show Provider, ProviderRef;
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
-// import '../../../../core/config/app_config.dart';
+import '../../../../core/config/app_config.dart';
+import '../../../../core/constants/endpoints.dart' as endpoints;
+import '../../../../core/utils/http_interceptor_service.dart';
 import '../models/notification_model.dart';
 
 class NotificationsRepo {
   late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   late AndroidNotificationChannel _androidNotificationChannel;
   late FirebaseMessaging _messaging;
-  final Reader _read;
-
-  NotificationsRepo(this._read);
+  final ProviderRef<NotificationsRepo> _ref;
+  final InterceptedClient http;
+  NotificationsRepo(this._ref) : http = _ref.read(httpProvider);
 
   Future<void> initFCM() async {
     //init firebase
@@ -130,15 +135,15 @@ class NotificationsRepo {
   }
 
   Future<void> _setDeviceIdAndFcmToken() async {
-    // final idAndToken = await _deviceIdAndToken();
-    // final body = {
-    //   'device_id': idAndToken[0],
-    //   'fmc_token': idAndToken[1],
-    // };
-    // await app.client.post(
-    //   Uri.parse(endpoints.setDeviceIdAndFCMToken),
-    //   body: body,
-    // );
+    final idAndToken = await _deviceIdAndToken();
+    final body = {
+      'device_id': idAndToken[0],
+      'fmc_token': idAndToken[1],
+    };
+    await http.post(
+      Uri.parse(endpoints.setDeviceIdAndFCMToken),
+      body: body,
+    );
   }
 
   Future<List<String>> _deviceIdAndToken() async {
@@ -161,45 +166,48 @@ class NotificationsRepo {
   }
 
   Future<NotificationModelResponse> notifications(int page) async {
-    // final configs = await _read(configurationsProvider.future);
-    // Get the notifications from the server and convert to NotificationModel
-    // final response = await _read(httpProvider).get...
-    // final result = NotificationModelResponse(
-    //   notifications: response.data['notifications'].map((e) {
-    //     return NotificationModel.fromJson(e);
-    //   }).toList(growable: false),
-    //   totalCount: response.data['total'],
-    // );
-    // return result;
-    return NotificationModelResponse(
-      notifications: [
-        NotificationModel(id: 'id', title: 'title', body: 'body'),
-      ],
-      totalCount: 5,
+    //Listen to url changes and get notifications.
+    final apiUrl = await _ref.watch(
+      configurationsProvider.future.select(
+        (config) async {
+          return (await config).apiUrl;
+        },
+      ),
     );
+    final url = '$apiUrl${endpoints.notificationsEndpoint}?page=$page';
+    final response = await http.get(Uri.parse(url));
+    final data = json.decode(response.body);
+    final result = NotificationModelResponse(
+      notifications: data['notifications'].map((e) {
+        return NotificationModel.fromJson(e);
+      }).toList(growable: false),
+      totalCount: data['total'],
+    );
+    return result;
   }
 
   Future<NotificationModelResponse> readNotification(String id) async {
-    // final configs = await _read(configurationsProvider.future);
-    //Read a notification and get the notifications
-    // from the server and convert to NotificationModel
-    // final response = await _read(httpProvider).post...
-    // final result = NotificationModelResponse(
-    //   notifications: response.data['notifications'].map((e) {
-    //     return NotificationModel.fromJson(e);
-    //   }).toList(growable: false),
-    //   totalCount: response.data['total'],
-    // );
-    // return result;
-    return NotificationModelResponse(
-      notifications: [
-        NotificationModel(id: 'id', title: 'title', body: 'body'),
-      ],
-      totalCount: 5,
+    //Listen to url changes and get notifications.
+    final apiUrl = await _ref.watch(
+      configurationsProvider.future.select(
+        (config) async {
+          return (await config).apiUrl;
+        },
+      ),
     );
+    final url = '$apiUrl${endpoints.readNotificationEndpoint}$id';
+    final response = await http.get(Uri.parse(url));
+    final data = json.decode(response.body);
+    final result = NotificationModelResponse(
+      notifications: data['notifications'].map((e) {
+        return NotificationModel.fromJson(e);
+      }).toList(growable: false),
+      totalCount: data['total'],
+    );
+    return result;
   }
 }
 
 final notificationsRepoProvider = Provider<NotificationsRepo>((ref) {
-  return NotificationsRepo(ref.read);
+  return NotificationsRepo(ref);
 });
