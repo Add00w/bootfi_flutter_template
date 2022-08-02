@@ -28,10 +28,13 @@ class App extends HookConsumerWidget {
       },
       builder: (_, child) => _Unfocus(child: child!),
       home: Scaffold(
-        body: Column(
-          children: [
-            Text(context.locale.appTitle),
-          ],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('Template'),
+            ],
+          ),
         ),
       ),
     );
