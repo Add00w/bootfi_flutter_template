@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../generated/I10n/app_localizations.dart';
 
-extension LocaleExtension on BuildContext {
+extension ContextExtensions on BuildContext {
   AppLocalizations get locale => AppLocalizations.of(this);
-}
-
-extension ScreenSizeExtension on BuildContext {
-  Size get size => MediaQuery.of(this).size;
-}
-
-extension AppThemeExtension on BuildContext {
+  Size get screenSize => MediaQuery.of(this).size;
   ThemeData get theme => Theme.of(this);
+  TextTheme get textTheme => Theme.of(this).textTheme;
 }
