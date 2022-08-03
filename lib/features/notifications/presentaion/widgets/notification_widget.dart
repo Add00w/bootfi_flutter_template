@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import './../../../../core/extensions/context_extensions.dart';
 import '../../data/models/notification_model.dart';
 import '../../notifiers/notification_state_notifier.dart';
 
@@ -35,14 +36,14 @@ class NotificationWidget extends HookConsumerWidget {
               ),
               const SizedBox(width: 9),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.75,
+                width: context.screenSize.width * 0.75,
                 child: Text(
                   notification.body,
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                        color: const Color(0xff121313),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14.0,
-                      ),
+                  style: context.textTheme.bodyText2!.copyWith(
+                    color: const Color(0xff121313),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
             ],
