@@ -8,8 +8,14 @@ import '../data/repository/notifications_repo.dart';
 class NotificationStateNotifier
     extends StateNotifier<NotificationModelResponse> {
   static final _defaultNotification = NotificationModelResponse(
-    notifications: [NotificationModel(id: '', title: '', body: '')],
-    totalCount: 0,
+    notifications: [
+      NotificationModel(
+        id: '1',
+        title: 'Happy coding!!',
+        body: 'Are you having fun with code?',
+      )
+    ],
+    totalCount: 1,
   );
   final refreshController = RefreshController(
     initialLoadStatus: LoadStatus.idle,
