@@ -16,6 +16,14 @@ class AboutUsView extends HookConsumerWidget {
     final developerOptionIsEnabled = ref.watch(developerOptionIsOnProvider);
     final serverNotifier = ref.watch(serverProvider.notifier);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'About Us',
+          style: context.textTheme.headline6,
+        ),
+        backgroundColor: context.theme.bottomAppBarColor,
+        elevation: 0.0,
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
