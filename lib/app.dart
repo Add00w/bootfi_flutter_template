@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'
-    show ConsumerWidget, HookConsumerWidget, StateProvider, WidgetRef;
+    show ConsumerWidget, StateProvider, WidgetRef;
 
 import './core/extensions/context_extensions.dart';
+import './features/settings/notifiers/settings_state_notifier.dart';
 import './generated/I10n/app_localizations.dart';
 import '../features/notifications/presentaion/views/notifications_view.dart';
 import '../features/settings/presentaion/views/settings_view.dart';
 
-class App extends HookConsumerWidget {
+class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint('rebuilding the app');
+    final currentLocaleNotifier = ref.watch(currentLocaleProvider.notifier);
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -23,10 +26,19 @@ class App extends HookConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => context.locale.appTitle,
       debugShowCheckedModeBanner: false,
+      locale: ref.watch(currentLocaleProvider),
       localeResolutionCallback: (deviceLocal, supportedLocals) {
-        // if (The user did not selected a language yet use the device locale) {
-        //  set the locale to deviceLocal
-        // }
+        // Start the app with the device's locale
+        // if the user not selected language yet and
+        // it is supported locale in our app
+        debugPrint('In localeResolutionCallback');
+        debugPrint('Selected locale:${currentLocaleNotifier.state}');
+        debugPrint('Device locale:${deviceLocal?.languageCode}');
+
+        if (currentLocaleNotifier.state == null &&
+            supportedLocals.contains(deviceLocal)) {
+          currentLocaleNotifier.state = deviceLocal;
+        }
         return null;
       },
       builder: (_, child) => _Unfocus(child: child!),
