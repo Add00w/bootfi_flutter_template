@@ -1,10 +1,12 @@
+import 'dart:ui' show Locale;
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/utils/helpers.dart';
 
-final selectedLanguageProvider = StateProvider<String>((ref) {
-  return '';
+final currentLocaleProvider = StateProvider<Locale?>((ref) {
+  return null;
 });
-final languagesProvider = StateProvider<Iterable<String>>((ref) {
+final supportedLanguagesProvider = StateProvider<Iterable<String>>((ref) {
   return supportedLanguages();
 });

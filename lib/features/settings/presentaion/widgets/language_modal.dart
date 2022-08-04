@@ -5,19 +5,16 @@ import './language_widget.dart';
 import '../../../../core/config/app_config.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/extensions/string_extensions.dart';
+import '../../../../core/utils/helpers.dart';
 import '../../notifiers/settings_state_notifier.dart';
 
 class LanguageModalBottomSheet extends ConsumerWidget {
-  const LanguageModalBottomSheet()
-      : super(
-          key: const Key('LanguageModalBottomSheet'),
-        );
+  const LanguageModalBottomSheet() : super(key: const Key('LanguageModal'));
   @override
   Widget build(BuildContext context, ref) {
-    final selectedLanguageNotifier =
-        ref.watch(selectedLanguageProvider.notifier);
-    final selectedLanguage = ref.watch(selectedLanguageProvider);
-    final languages = ref.read(languagesProvider);
+    final currentLocaleNotifier = ref.watch(currentLocaleProvider.notifier);
+    final currentLocale = ref.watch(currentLocaleProvider);
+    final languages = ref.watch(supportedLanguagesProvider);
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       decoration: const BoxDecoration(
@@ -38,9 +35,11 @@ class LanguageModalBottomSheet extends ConsumerWidget {
             LanguageWidget(
               key: Key('$index'),
               language: languages.elementAt(index),
-              selected: selectedLanguage == languages.elementAt(index),
+              selected:
+                  currentLocale == languageToLocale(languages.elementAt(index)),
               languageSelected: () {
-                selectedLanguageNotifier.state = languages.elementAt(index);
+                currentLocaleNotifier.state =
+                    languageToLocale(languages.elementAt(index));
               },
             ),
         ],
