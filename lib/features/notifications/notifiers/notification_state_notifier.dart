@@ -41,6 +41,7 @@ class NotificationStateNotifier
       state = await _repo.notifications(currentPage);
     } on Exception catch (_) {
       // TODO
+      refreshController.refreshFailed();
     }
     refreshController.refreshCompleted();
   }
