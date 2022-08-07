@@ -36,7 +36,13 @@ class NotificationStateNotifier
   }
 
   void notifications() async {
-    state = await _repo.notifications(currentPage);
+    refreshController.resetNoData();
+    try {
+      state = await _repo.notifications(currentPage);
+    } on Exception catch (_) {
+      // TODO
+    }
+    refreshController.refreshCompleted();
   }
 
   void readNotification(String id) async {
