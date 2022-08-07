@@ -39,7 +39,7 @@ class AboutUsView extends HookConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'About us text.',
+                'Description.',
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.04,
                 ),
@@ -53,7 +53,7 @@ class AboutUsView extends HookConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Our app text.',
+                'Description.',
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.04,
                 ),
