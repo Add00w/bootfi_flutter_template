@@ -1,3 +1,3 @@
-const setDeviceIdAndFCMToken = '';
+const setDeviceIdAndFCMTokenEndpoint = '';
 const notificationsEndpoint = '';
 const readNotificationEndpoint = '';
