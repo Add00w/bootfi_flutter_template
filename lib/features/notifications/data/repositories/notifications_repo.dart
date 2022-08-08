@@ -24,10 +24,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart' show Provider, ProviderRef;
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
-import '../../../../core/config/app_config.dart';
-import '../../../../core/constants/endpoints.dart' as endpoints;
-import '../../../../core/utils/http_interceptor_service.dart';
-import '../models/notification_model.dart';
+import '../../../../core/core.dart';
+import '../../notifications.dart';
 
 class NotificationsRepo {
   late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
@@ -141,7 +139,7 @@ class NotificationsRepo {
       'fmc_token': idAndToken[1],
     };
     await http.post(
-      Uri.parse(endpoints.setDeviceIdAndFCMToken),
+      Uri.parse(setDeviceIdAndFCMTokenEndpoint),
       body: body,
     );
   }
@@ -174,7 +172,7 @@ class NotificationsRepo {
         },
       ),
     );
-    final url = '$apiUrl${endpoints.notificationsEndpoint}?page=$page';
+    final url = '$apiUrl$notificationsEndpoint?page=$page';
     final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
     final result = NotificationModelResponse(
@@ -195,7 +193,7 @@ class NotificationsRepo {
         },
       ),
     );
-    final url = '$apiUrl${endpoints.readNotificationEndpoint}$id';
+    final url = '$apiUrl$readNotificationEndpoint$id';
     final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
     final result = NotificationModelResponse(

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart' show useTextEditingController;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/providers.dart';
+import '../../../../core/core.dart';
 
 class AboutUsView extends HookConsumerWidget {
   const AboutUsView({Key? key}) : super(key: key);

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import './../../../../core/extensions/context_extensions.dart';
-import '../../data/models/notification_model.dart';
-import '../../notifiers/notification_state_notifier.dart';
+import './../../../../core/extensions/extensions.dart';
+import '../../notifications.dart';
 
 class NotificationWidget extends HookConsumerWidget {
   const NotificationWidget({Key? key, required this.notification})

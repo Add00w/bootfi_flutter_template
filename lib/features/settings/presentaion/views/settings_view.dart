@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import './about_us_view.dart';
-import './contact_us_view.dart';
-import '../../../../core/config/app_config.dart';
-import '../../../../core/constants/app_constants.dart';
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/extensions/string_extensions.dart';
-import '../../../auth/presentation/views/login_view.dart';
-import '../../../auth/providers.dart';
-import '../../../notifications/notifiers/notification_state_notifier.dart';
-import '../../../notifications/presentaion/views/notifications_view.dart';
-import '../widgets/language_modal.dart';
-import '../widgets/settings_item.dart';
+import '../../../../core/core.dart';
+import '../../../auth/auth.dart';
+import '../../../notifications/notifications.dart';
+import '../../settings.dart';
 
 class SettingsView extends ConsumerWidget {
   const SettingsView({Key? key}) : super(key: key);

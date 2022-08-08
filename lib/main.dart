@@ -1,4 +1,3 @@
-import 'package:bootfi_flutter_template/core/config/app_config.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode, debugPrint;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'
@@ -7,8 +6,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import './app.dart';
-import './features/notifications/notifiers/notification_state_notifier.dart';
-import 'core/constants/app_constants.dart' as app_constants;
+import './core/core.dart';
+import './features/notifications/notifications.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,7 @@ Future<void> main() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   String version = packageInfo.version;
   String appName = packageInfo.appName;
-  app_constants.appVersion = version;
+  appVersion = version;
 //Use UncontrolledProvider instead ProviderScope to initialize
 // some services at start.
   final container = ProviderContainer();

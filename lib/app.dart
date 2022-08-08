@@ -3,19 +3,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'
     show ConsumerWidget, StateProvider, WidgetRef;
 
-import './core/extensions/context_extensions.dart';
-import './features/settings/notifiers/settings_state_notifier.dart';
+import './core/core.dart';
+import './features/notifications/notifications.dart';
+import './features/settings/settings.dart';
 import './generated/I10n/app_localizations.dart';
-import '../features/notifications/presentaion/views/notifications_view.dart';
-import '../features/settings/presentaion/views/settings_view.dart';
 
 class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint('rebuilding the app');
-    final currentLocaleNotifier = ref.watch(currentLocaleProvider.notifier);
+    final currentLocaleNotifier = ref.read(currentLocaleProvider.notifier);
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -28,15 +26,10 @@ class App extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       locale: ref.watch(currentLocaleProvider),
       localeResolutionCallback: (deviceLocal, supportedLocals) {
-        // Start the app with the device's locale
-        // if the user not selected language yet and
-        // it is supported locale in our app
-        debugPrint('In localeResolutionCallback');
-        debugPrint('Selected locale:${currentLocaleNotifier.state}');
-        debugPrint('Device locale:${deviceLocal?.languageCode}');
-
         if (currentLocaleNotifier.state == null &&
             supportedLocals.contains(deviceLocal)) {
+          // If there is no user selected locale
+          // Device's locale is the app's locale
           currentLocaleNotifier.state = deviceLocal;
         }
         return null;

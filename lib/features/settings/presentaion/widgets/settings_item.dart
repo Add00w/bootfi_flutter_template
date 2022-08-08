@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/extensions/extensions.dart';
 
 class SettingsItem extends StatelessWidget {
   const SettingsItem({

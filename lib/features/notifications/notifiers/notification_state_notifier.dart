@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart'
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../data/models/notification_model.dart';
-import '../data/repository/notifications_repo.dart';
+import '../data/repositories/notifications_repo.dart';
 
 class NotificationStateNotifier
     extends StateNotifier<NotificationModelResponse> {

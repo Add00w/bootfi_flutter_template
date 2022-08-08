@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/widgets/pull_to_refresh_widget.dart';
-import '../../notifiers/notification_state_notifier.dart';
-import '../widgets/empty_notification_widget.dart';
-import '../widgets/notification_widget.dart';
+import '../../../../core/core.dart';
+import '../../notifiers/notifiers.dart';
+import '../widgets/widgets.dart';
 
 class NotificationsView extends ConsumerWidget {
   const NotificationsView({Key? key}) : super(key: key);
