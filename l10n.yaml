@@ -7,7 +7,7 @@ arb-dir: assets/lang
 ##The directory where the generated localization classes will be written if the synthetic-package
 ##flag is set to false.
 
-output-dir: lib/generated/I10n
+output-dir: lib/generated/l10n
 # output-dir: lib/generated
 ## Names the template arb file that will be used to check and validate the
 ## remaining arb files when generating `outut-class` and its supporting
