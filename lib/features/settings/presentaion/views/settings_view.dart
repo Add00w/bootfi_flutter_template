@@ -12,11 +12,12 @@ class SettingsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final auth = ref.watch(authProvider);
+    final currentLocale = ref.watch(currentLocaleProvider);
     final notifications = ref.watch(notificationsStateNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Settings',
+          context.locale.settings,
           style: context.textTheme.headline6,
         ),
         backgroundColor: context.theme.bottomAppBarColor,
@@ -39,8 +40,9 @@ class SettingsView extends ConsumerWidget {
                   children: [
                     SettingsItem(
                       key: const Key('Language'),
-                      title: 'Language',
-                      trailing: 'English',
+                      title: context.locale.language,
+                      trailing:
+                          codeToLanguage(currentLocale?.languageCode ?? ''),
                       onTap: () {
                         showModalBottomSheet<dynamic>(
                           context: context,
@@ -58,7 +60,7 @@ class SettingsView extends ConsumerWidget {
                         children: [
                           SettingsItem(
                             key: const Key('notifications'),
-                            title: 'Notifications',
+                            title: context.locale.notifications,
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -114,7 +116,7 @@ class SettingsView extends ConsumerWidget {
                       ),
                     SettingsItem(
                       key: const Key('aboutUs'),
-                      title: 'About Us',
+                      title: context.locale.aboutUs,
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -128,7 +130,7 @@ class SettingsView extends ConsumerWidget {
                     ),
                     SettingsItem(
                       key: const Key('contactUs'),
-                      title: 'Contact Us',
+                      title: context.locale.contactUs,
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -170,7 +172,7 @@ class SettingsView extends ConsumerWidget {
                     //       )
                     //     :
                     Text(
-                  auth ? 'Sign out' : 'Sign in',
+                  auth ? context.locale.signOut : context.locale.signIn,
                   style: Theme.of(context).textTheme.button!.copyWith(
                         color: Color(auth ? 0xfff23d3d : 0xff3d9ef2),
                         fontWeight: FontWeight.w500,
@@ -182,7 +184,7 @@ class SettingsView extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(top: 22),
               child: Text(
-                "Version $appVersion",
+                "${context.locale.version} $appVersion",
                 key: const Key('Version'),
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: const Color(0xff484848),

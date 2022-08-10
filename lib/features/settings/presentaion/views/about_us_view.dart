@@ -17,7 +17,7 @@ class AboutUsView extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'About Us',
+          context.locale.aboutUs,
           style: context.textTheme.headline6,
         ),
         backgroundColor: context.theme.bottomAppBarColor,
@@ -31,35 +31,35 @@ class AboutUsView extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Who are we?',
+                context.locale.whoAreWe,
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.06,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Description.',
+                context.locale.whoAreWeText,
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.04,
                 ),
               ),
               const SizedBox(height: 30),
               Text(
-                'Our app',
+                context.locale.ourApp,
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.06,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'Description.',
+                context.locale.ourAppText,
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.04,
                 ),
               ),
               const SizedBox(height: 30),
               Text(
-                'Developed by',
+                context.locale.developedBy,
                 style: TextStyle(
                   fontSize: context.screenSize.width * 0.06,
                 ),

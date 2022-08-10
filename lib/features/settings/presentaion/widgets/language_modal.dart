@@ -75,7 +75,7 @@ class _BottomSheetHeader extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Choose language',
+                  context.locale.chooseLanguage,
                   style: context.textTheme.headline5?.copyWith(
                     fontSize: 23,
                   ),
@@ -92,12 +92,14 @@ class _BottomSheetHeader extends ConsumerWidget {
                   future: ref.watch(configurationsProvider.future),
                   builder: (context, configs) {
                     if (!configs.hasData) return const SizedBox.shrink();
-                    return Text('Done',
-                        style: context.textTheme.bodyText2!.copyWith(
-                          color: Color(configs.data!.primaryColor.toInt),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15.0,
-                        ));
+                    return Text(
+                      context.locale.done,
+                      style: context.textTheme.bodyText2!.copyWith(
+                        color: Color(configs.data!.primaryColor.toInt),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15.0,
+                      ),
+                    );
                   },
                 ),
               ),

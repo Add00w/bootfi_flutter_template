@@ -1,3 +1,19 @@
 {"@@locale": "ar",
-    "appTitle":"مشروع نموذج بوتفاي"
+    "appTitle":"مشروع نموذج بوتفاي",
+    "emptyNotifications":"لا توجد اشعارات حتى الآن",
+    "settings":"الإعدادات",
+    "language":"اللغة",
+    "chooseLanguage":"إختراللغة",
+    "aboutUs":"عن التطبيق",
+    "contactUs":"تواصل معنا",
+    "version":"الإصدار",
+    "signIn":"تسجيل الدخول",
+    "signOut":"تسجيل الخروج",
+    "done":"تم",
+    "whoAreWe":"من نحن ؟",
+    "whoAreWeText":"نص عنا",
+    "ourApp":"تطبيقنا : ",
+    "ourAppText":"نص عن التطبيق",
+    "notifications":"الإشعارات",
+    "developedBy":"طور بواسطة :"
 }

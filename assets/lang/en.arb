@@ -1,4 +1,19 @@
 {"@@locale": "en",
     "appTitle":"Bootfi template",
-    "emptyNotifications":"No Notifications"
+    "emptyNotifications":"No Notifications",
+    "settings":"Settings",
+    "language":"Language",
+    "chooseLanguage":"Choose Language",
+    "aboutUs":"About Us",
+    "contactUs":"Contact Us",
+    "version":"Version",
+    "signIn":"Sign In",
+    "signOut":"Sign Out",
+    "done":"Done",
+    "whoAreWe":"Who Are We?",
+    "whoAreWeText":"Who are we text.",
+    "ourApp":"Our App : ",
+    "ourAppText":"About the app text.",
+    "notifications":"Notifications",
+    "developedBy":"Develobed by :"
 }

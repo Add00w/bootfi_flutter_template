@@ -18,7 +18,7 @@ class EmptyNotifications extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Text(
-            'No notifications',
+            context.locale.emptyNotifications,
             style: context.textTheme.headline6!.copyWith(
               color: const Color(0XFFababb7),
             ),

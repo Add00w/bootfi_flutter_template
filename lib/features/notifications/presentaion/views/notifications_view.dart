@@ -15,7 +15,7 @@ class NotificationsView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Notifications',
+          context.locale.notifications,
           style: context.textTheme.headline6,
         ),
         backgroundColor: context.theme.scaffoldBackgroundColor,
