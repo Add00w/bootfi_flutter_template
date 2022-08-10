@@ -1,26 +1,26 @@
 import 'dart:ui' show Locale;
 
-import '../../generated/I10n/app_localizations.dart';
+import '../../generated/l10n/app_localizations.dart';
+
+String codeToLanguage(String code) {
+  switch (code) {
+    case 'en':
+      return 'English';
+    case 'ar':
+      return 'عربي';
+    default:
+      return 'English';
+  }
+}
 
 Iterable<String> supportedLanguages() {
-  String _codeToLanguage(String code) {
-    switch (code) {
-      case 'en':
-        return 'English';
-      case 'ar':
-        return 'عربي';
-      default:
-        return 'English';
-    }
-  }
-
   final supportedLanguages = AppLocalizations.supportedLocales
-      .map((locale) => _codeToLanguage(locale.languageCode));
+      .map((locale) => codeToLanguage(locale.languageCode));
   return supportedLanguages;
 }
 
 Locale languageToLocale(String language) {
-  _languageToCode(String language) {
+  String languageToCode(String language) {
     switch (language) {
       case 'عربي':
         return 'ar';
@@ -29,5 +29,5 @@ Locale languageToLocale(String language) {
     }
   }
 
-  return Locale(_languageToCode(language));
+  return Locale(languageToCode(language));
 }
