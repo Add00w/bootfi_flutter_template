@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart'
 import './core/core.dart';
 import './features/notifications/notifications.dart';
 import './features/settings/settings.dart';
-import './generated/I10n/app_localizations.dart';
+import './generated/l10n/app_localizations.dart';
 
 class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
