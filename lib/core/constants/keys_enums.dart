@@ -1,0 +1,1 @@
+enum SharedPrefrenceKeys { token, locale }
