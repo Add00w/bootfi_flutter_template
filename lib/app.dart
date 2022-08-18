@@ -13,7 +13,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLocaleNotifier = ref.read(currentLocaleProvider.notifier);
+    final currentLocale = ref.watch(currentLocaleProvider);
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -24,13 +24,14 @@ class App extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => context.locale.appTitle,
       debugShowCheckedModeBanner: false,
-      locale: ref.watch(currentLocaleProvider),
+      locale: currentLocale,
       localeResolutionCallback: (deviceLocal, supportedLocals) {
-        if (currentLocaleNotifier.state == null &&
-            supportedLocals.contains(deviceLocal)) {
+        if (currentLocale == null && supportedLocals.contains(deviceLocal)) {
           // If there is no user selected locale
           // Device's locale is the app's locale
-          currentLocaleNotifier.state = deviceLocal;
+          ref
+              .read(currentLocaleProvider.notifier)
+              .defaultToDeviceLocale(deviceLocal);
         }
         return null;
       },

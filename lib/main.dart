@@ -8,6 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import './app.dart';
 import './core/core.dart';
 import './features/notifications/notifications.dart';
+import './features/settings/settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,7 @@ Future<void> main() async {
   // read the services you want to be pre-initialized
   container.read(notificationsStateNotifierProvider);
   final config = await container.read(configurationsProvider.future);
+  container.read(currentLocaleProvider.notifier).getLocale();
   if (config.sentryDns.isEmpty) {
     runApp(
       UncontrolledProviderScope(

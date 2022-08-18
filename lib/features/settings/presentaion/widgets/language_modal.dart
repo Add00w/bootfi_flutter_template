@@ -34,9 +34,7 @@ class LanguageModalBottomSheet extends ConsumerWidget {
                   languageToLocale(languages.elementAt(index)),
               languageSelected: () {
                 ref.read(selectedLocaleProvider.notifier).state =
-                    languageToLocale(
-                  languages.elementAt(index),
-                );
+                    languageToLocale(languages.elementAt(index));
               },
             ),
         ],
@@ -84,8 +82,12 @@ class _BottomSheetHeader extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
-                  ref.read(currentLocaleProvider.notifier).state =
-                      ref.read(selectedLocaleProvider);
+                  final locale = ref.read(selectedLocaleProvider);
+                  if (locale != null) {
+                    ref
+                        .read(currentLocaleProvider.notifier)
+                        .changeLocale(locale);
+                  }
                   Navigator.of(context).pop();
                 },
                 child: FutureBuilder<Configuration>(
