@@ -1,25 +1,9 @@
 import 'dart:convert' show json;
 
 import 'package:firebase_core/firebase_core.dart' show Firebase;
-import 'package:firebase_messaging/firebase_messaging.dart'
-    show
-        AndroidNotification,
-        FirebaseMessaging,
-        RemoteMessage,
-        RemoteNotification;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show debugPrint;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart'
-    show
-        AndroidFlutterLocalNotificationsPlugin,
-        AndroidInitializationSettings,
-        AndroidNotificationChannel,
-        AndroidNotificationDetails,
-        FlutterLocalNotificationsPlugin,
-        IOSInitializationSettings,
-        IOSNotificationDetails,
-        Importance,
-        InitializationSettings,
-        NotificationDetails;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart' show Provider, ProviderRef;
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:platform_device_id/platform_device_id.dart';
