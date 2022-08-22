@@ -88,7 +88,7 @@ class _BottomSheetHeader extends ConsumerWidget {
                         .read(currentLocaleProvider.notifier)
                         .changeLocale(locale);
                   }
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
                 child: FutureBuilder<Configuration>(
                   future: ref.watch(configurationsProvider.future),

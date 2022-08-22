@@ -62,13 +62,9 @@ class SettingsView extends ConsumerWidget {
                             key: const Key('notifications'),
                             title: context.locale.notifications,
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return const NotificationsView(
-                                      key: Key('notificationsPage'),
-                                    );
-                                  },
+                              context.push(
+                                const NotificationsView(
+                                  key: Key('notificationsPage'),
                                 ),
                               );
                             },
@@ -118,12 +114,9 @@ class SettingsView extends ConsumerWidget {
                       key: const Key('aboutUs'),
                       title: context.locale.aboutUs,
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const AboutUsView(
-                                  key: Key('android_about'));
-                            },
+                        context.push(
+                          const AboutUsView(
+                            key: Key('android_about'),
                           ),
                         );
                       },
@@ -132,12 +125,8 @@ class SettingsView extends ConsumerWidget {
                       key: const Key('contactUs'),
                       title: context.locale.contactUs,
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const ContactUsView();
-                            },
-                          ),
+                        context.push(
+                          const ContactUsView(),
                         );
                       },
                     ),
@@ -156,13 +145,11 @@ class SettingsView extends ConsumerWidget {
                     shape: const ContinuousRectangleBorder()),
                 onPressed: () {
                   if (auth) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const LoginView(),
-                      ),
-                    );
-                  } else {
                     //logout
+                  } else {
+                    context.push(
+                      const LoginView(),
+                    );
                   }
                 },
                 child:
