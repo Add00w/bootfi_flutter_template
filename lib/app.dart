@@ -35,6 +35,7 @@ class App extends ConsumerWidget {
         }
         return null;
       },
+      theme: ref.watch(themeProvider),
       builder: (_, child) => _Unfocus(child: child!),
       home: const _MainLayout(),
     );
