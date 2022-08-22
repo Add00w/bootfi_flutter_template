@@ -31,6 +31,9 @@ class LocaleNotifier extends StateNotifier<Locale?> {
   }
 }
 
+final isLocaleArProvider = StateProvider<bool>((ref) {
+  return ref.watch(currentLocaleProvider)?.languageCode == 'ar';
+});
 final currentLocaleProvider =
     StateNotifierProvider<LocaleNotifier, Locale?>((ref) {
   return LocaleNotifier(ref.read);
