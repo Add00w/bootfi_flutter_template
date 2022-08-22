@@ -12,6 +12,7 @@ class SettingsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final auth = ref.watch(authProvider);
+    final isLocaleAr = ref.watch(isLocaleArProvider);
     final currentLocale = ref.watch(currentLocaleProvider);
     final notifications = ref.watch(notificationsStateNotifierProvider);
     return Scaffold(
@@ -23,115 +24,108 @@ class SettingsView extends ConsumerWidget {
         backgroundColor: context.theme.bottomAppBarColor,
         elevation: 0.0,
       ),
-      body: Container(
-        color: Colors.grey.shade50,
-        width: double.infinity,
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 4),
-            SizedBox(
-              width: double.infinity,
-              child: Card(
-                elevation: 0.0,
-                margin: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SettingsItem(
-                      key: const Key('Language'),
-                      title: context.locale.language,
-                      trailing:
-                          codeToLanguage(currentLocale?.languageCode ?? ''),
-                      onTap: () {
-                        showModalBottomSheet<dynamic>(
-                          context: context,
-                          barrierColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) {
-                            return const LanguageModalBottomSheet();
+            Card(
+              elevation: 0.0,
+              margin: EdgeInsets.zero,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SettingsItem(
+                    key: const Key('Language'),
+                    title: context.locale.language,
+                    trailing: codeToLanguage(currentLocale?.languageCode ?? ''),
+                    onTap: () {
+                      showModalBottomSheet<dynamic>(
+                        context: context,
+                        barrierColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) {
+                          return const LanguageModalBottomSheet();
+                        },
+                      );
+                    },
+                  ),
+                  if (auth)
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SettingsItem(
+                          key: const Key('notifications'),
+                          title: context.locale.notifications,
+                          onTap: () {
+                            context.push(
+                              const NotificationsView(
+                                key: Key('notificationsPage'),
+                              ),
+                            );
                           },
-                        );
-                      },
-                    ),
-                    if (auth)
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SettingsItem(
-                            key: const Key('notifications'),
-                            title: context.locale.notifications,
-                            onTap: () {
-                              context.push(
-                                const NotificationsView(
-                                  key: Key('notificationsPage'),
+                        ),
+                        Positioned(
+                          left: isLocaleAr
+                              ? null
+                              : context.screenSize.width * 0.3,
+                          right: isLocaleAr
+                              ? context.screenSize.width * 0.2
+                              : null,
+                          child: FutureBuilder<Configuration>(
+                            future: ref.watch(configurationsProvider.future),
+                            builder: (context, configs) {
+                              return Container(
+                                width: 28,
+                                height: 17,
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(8.5),
+                                  ),
+                                  color:
+                                      Color(configs.data!.primaryColor.toInt),
+                                ),
+                                alignment: Alignment.center,
+                                margin: isLocaleAr
+                                    ? null
+                                    : const EdgeInsets.only(bottom: 5.0),
+                                child: Text(
+                                  '${notifications.totalCount}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6!
+                                      .copyWith(
+                                        color: const Color(0xffffffff),
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12.0,
+                                      ),
                                 ),
                               );
                             },
                           ),
-                          Positioned(
-                            left: context.locale.localeName == 'en'
-                                ? context.screenSize.width * 0.3
-                                : null,
-                            right: context.locale.localeName == 'ar'
-                                ? context.screenSize.width * 0.2
-                                : null,
-                            child: FutureBuilder<Configuration>(
-                                future:
-                                    ref.watch(configurationsProvider.future),
-                                builder: (context, configs) {
-                                  return Container(
-                                    width: 28,
-                                    height: 17,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(8.5),
-                                      ),
-                                      color: Color(
-                                          configs.data!.primaryColor.toInt),
-                                    ),
-                                    alignment: Alignment.center,
-                                    margin: context.locale.localeName == 'en'
-                                        ? const EdgeInsets.only(bottom: 5.0)
-                                        : null,
-                                    child: Text(
-                                      '${notifications.totalCount}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6!
-                                          .copyWith(
-                                            color: const Color(0xffffffff),
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12.0,
-                                          ),
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
-                      ),
-                    SettingsItem(
-                      key: const Key('aboutUs'),
-                      title: context.locale.aboutUs,
-                      onTap: () {
-                        context.push(
-                          const AboutUsView(
-                            key: Key('android_about'),
-                          ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                    SettingsItem(
-                      key: const Key('contactUs'),
-                      title: context.locale.contactUs,
-                      onTap: () {
-                        context.push(
-                          const ContactUsView(),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                  SettingsItem(
+                    key: const Key('aboutUs'),
+                    title: context.locale.aboutUs,
+                    onTap: () {
+                      context.push(
+                        const AboutUsView(
+                          key: Key('android_about'),
+                        ),
+                      );
+                    },
+                  ),
+                  SettingsItem(
+                    key: const Key('contactUs'),
+                    title: context.locale.contactUs,
+                    onTap: () {
+                      context.push(
+                        const ContactUsView(),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 8),

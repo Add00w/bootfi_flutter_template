@@ -48,6 +48,7 @@ class _BottomSheetHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isLocaleAr = ref.watch(isLocaleArProvider);
     return Column(
       children: [
         Container(
@@ -60,12 +61,8 @@ class _BottomSheetHeader extends ConsumerWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            right: context.locale.localeName == 'ar'
-                ? context.screenSize.width * 0.2
-                : 0.0,
-            left: context.locale.localeName == 'en'
-                ? context.screenSize.width * 0.2
-                : 0.0,
+            right: isLocaleAr ? context.screenSize.width * 0.2 : 0.0,
+            left: isLocaleAr ? 0.0 : context.screenSize.width * 0.2,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
