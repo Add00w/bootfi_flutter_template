@@ -14,7 +14,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //Use debugPrint and not print to log in console
   //That will avoid printing in production mode
-  //By using the below code
   if (kReleaseMode) {
     debugPrint = (String? message, {int? wrapWidth}) {};
   }
