@@ -21,12 +21,12 @@ class NotificationStateNotifier
     initialLoadStatus: LoadStatus.idle,
   );
   // Also make sure if watch is needed or not
-  NotificationStateNotifier(this._read)
-      : _repo = _read(notificationsRepoProvider),
+  NotificationStateNotifier(this.read)
+      : _repo = read(notificationsRepoProvider),
         super(_defaultNotification) {
     initFCM();
   }
-  final Reader _read;
+  final Reader read;
   final NotificationsRepo _repo;
   late int currentPage = 0;
   late int lastPage = 0;
