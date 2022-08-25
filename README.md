@@ -2,6 +2,9 @@
 
 This is a template for all of our projects in Bootfi.
 
+## Temp notes for the Dockerized branch
+   *Install Docker and Remote development extensions for vscode*
+
 *It's feature-first and using riverpod*
 ---
 
